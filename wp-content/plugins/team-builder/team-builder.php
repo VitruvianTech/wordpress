@@ -52,7 +52,7 @@ require_once("ink/admin/menu.php");
  require_once("template/shortcode.php");
 
 function get_team( $req ) {
-	return serialize(get_post_meta( 5, 'wpsm_team_b_data', true ));
+	return unserialize(get_post_meta( 5, 'wpsm_team_b_data', true ));
 }
 
 add_action( 'rest_api_init', function () {
