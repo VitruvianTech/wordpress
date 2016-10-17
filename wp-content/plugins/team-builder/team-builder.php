@@ -56,7 +56,7 @@ function get_team( $req ) {
 }
 
 add_action( 'rest_api_init', function () {
-	register_rest_route( 'team/v1', '/members', array(
+	register_rest_route( 'vitruviantech/v1', '/team', array(
 		'methods' => 'GET',
 		'callback' => 'get_team',
 	) );
