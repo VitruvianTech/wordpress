@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
+const path = require('path');
 const hostname = process.env.HOSTNAME || '127.0.0.1';
 const port = process.env.PORT || 8000;
-const options = { stdio: [ 'inherit', 'inherit', 'inherit' ] };
+const options = {
+  stdio: [ 'inherit', 'inherit', 'inherit' ],
+  cwd: path.resolve(__dirname, '..')
+};
 
 console.log(`Starting WordPress server on ${hostname} port ${port}...`);
 

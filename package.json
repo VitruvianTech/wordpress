@@ -15,6 +15,9 @@
     "VitruvianTech"
   ],
   "main": "bin/server.js",
+  "bin": {
+    "scorpio-cms": "./bin/server.js"
+  },
   "scripts": {
     "start": "PORT=${PORT:=8000} concurrent --kill-others \"npm run start-prod\"",
     "start-prod": "better-npm-run start-prod"
