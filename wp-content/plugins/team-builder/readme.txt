@@ -4,7 +4,7 @@ Donate link: http://www.wpshopmart.com
 Tags:  members profiles, my team, our team, team, team members, team plugin wordpress, team showcase, carousel, custom, custom post type, cv, directory, employees, grid, grid team, meet team, members, portal, portfolio, profile, shortcode, skills, social, stack, member staff,  template, v-card, widget, team page,  meet the team, people, responsive, shortcode, team staff, teams, About Us, employees, expert, meet the expert,  staff, our staff, team builder, team manager, team profile, team slider, v-card, carousel, modern team member wp hover item, responsive, Team Member, team member carousel, team member wordpress plugin, Unlimited Colors, WordPress Team Member, our team wordpress, testimonials , testimonial
 Requires at least: 3.5
 Tested up to: 4.6.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,7 @@ Team Builder is most flexible WordPress plugin available to create and manage yo
 
 Team builder comes with 2 Design Layout with unlimited color scheme. You can easily add and delete team member. With this plugin you can build fantastic team showcase in very little time. You can also use it to display testimonials or other kinds of content that require an image and text! 
 
+https://www.youtube.com/watch?v=9QZ4Ypi24Do
 
 ### Check Demo
 
@@ -78,6 +79,9 @@ Please use WordPress support forum to ask any query regarding any issue.
 
 
 == Changelog ==
+
+= 1.1 =
+* Minor Bug resolved
 
 = 1.0 =
 * Initial release.

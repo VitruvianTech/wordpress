@@ -88,7 +88,7 @@
 			}
 			else
 			{
-				echo "hello";
+				echo "No Team Group Found";
 			}
 		
 			?>		

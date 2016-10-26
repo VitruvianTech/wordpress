@@ -91,6 +91,7 @@ class wpsm_team_b {
 	public function wpsm_team_b_meta_boxes_group(){
 		add_meta_box('team_b_add', __('Add Team Panel', wpshopmart_team_b_text_domain), array(&$this, 'wpsm_add_team_b_meta_box_function'), 'team_builder', 'normal', 'low' );
 		add_meta_box ('team_b_shortcode', __('Team Shortcode', wpshopmart_team_b_text_domain), array(&$this, 'wpsm_pic_team_b_shortcode'), 'team_builder', 'normal', 'low');
+		add_meta_box ('team_b_more_pro', __('More Pro Plugin From Wpshopmart', wpshopmart_team_b_text_domain), array(&$this, 'wpsm_team_pic_more_pro'), 'team_builder', 'normal', 'low');
 		add_meta_box('team_b_rateus', __('Rate Us If You Like This Plugin', wpshopmart_team_b_text_domain), array(&$this, 'wpsm_team_b_rateus_meta_box_function'), 'team_builder', 'side', 'low');
 		add_meta_box('team_b_setting', __('Team Settings', wpshopmart_team_b_text_domain), array(&$this, 'wpsm_add_team_b_setting_function'), 'team_builder', 'side', 'low');
 	}
@@ -166,6 +167,10 @@ class wpsm_team_b {
 	}
 	public function wpsm_add_team_b_setting_function($post){
 		require_once('settings.php');
+	}
+	
+	public function wpsm_team_pic_more_pro(){
+		require_once('more-pro.php');
 	}
 	
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Team  Builder
- * Version: 1.0
+ * Version: 1.1
  * Description:  Team Builder is most flexible WordPress plugin available to create and manage your Team page with drag and drop feature.
  * Author: wpshopmart
  * Author URI: http://www.wpshopmart.com
@@ -39,6 +39,22 @@ function wpsm_team_b_default_data() {
 }
 register_activation_hook( __FILE__, 'wpsm_team_b_default_data' );
 
+add_action('admin_menu' , 'wpsm_team_b_recom_menu');
+function wpsm_team_b_recom_menu() {
+	$submenu = add_submenu_page('edit.php?post_type=team_builder', __('More_Free_Plugins', wpshopmart_team_b_text_domain), __('More Free Plugins', wpshopmart_team_b_text_domain), 'administrator', 'wpsm_team_b_recom_page', 'wpsm_team_b_recom_page_funct');
+	
+	//add hook to add styles and scripts for Responsive Accordion plugin admin page
+    add_action( 'admin_print_styles-' . $submenu, 'wpsm_team_b_recom_js_css' );
+	}
+	function wpsm_team_b_recom_js_css(){
+		wp_enqueue_style('wpsm_team_b_bootstrap_css_recom', wpshopmart_team_b_directory_url.'assets/css/bootstrap.css');
+		wp_enqueue_style('wpsm_ac_help_css', wpshopmart_team_b_directory_url.'assets/css/help.css');
+	}
+function wpsm_team_b_recom_page_funct(){
+	require_once('ink/admin/free.php');
+}
+
+
 /**
  * CPT CLASS
  */
@@ -52,13 +68,13 @@ require_once("ink/admin/menu.php");
  require_once("template/shortcode.php");
 
 function get_team( $req ) {
-	return unserialize(get_post_meta( 5, 'wpsm_team_b_data', true ));
+ return unserialize(get_post_meta( 5, 'wpsm_team_b_data', true ));
 }
 
 add_action( 'rest_api_init', function () {
-	register_rest_route( 'vitruviantech/v1', '/team', array(
-		'methods' => 'GET',
-		'callback' => 'get_team',
-	) );
+ register_rest_route( 'scorpio/v1', '/team', array(
+   'methods' => 'GET',
+   'callback' => 'get_team',
+ ) );
 } );
 ?>
