@@ -1,9 +1,9 @@
 {
   "name": "@vitruvian-tech/scorpio-cms",
-  "description": "The VitruvianTech™ CMS",
+  "description": "The VitruvianTech™ Scorpio CMS",
   "author": "Peter C. Romano <pete@vitruvian.tech> (http://github.com/vitruvian-tech)",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/vitruvian-tech/Scorpio-CMS"

@@ -8,6 +8,6 @@ const options = {
   cwd: path.resolve(__dirname, '..')
 };
 
-console.log(`Starting WordPress server on ${hostname} port ${port}...`);
+console.log(`Starting Scorpio CMS (WordPress) server on ${hostname} port ${port}...`);
 
 require('child_process').spawn('php', ['-S', [hostname, port].join(':')], options);
