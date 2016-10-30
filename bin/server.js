@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const hostname = process.env.HOSTNAME || '127.0.0.1';
+const hostname = process.env.HOSTNAME || '0.0.0.0';
 const port = process.env.PORT || 8000;
 const options = {
   stdio: [ 'inherit', 'inherit', 'inherit' ],
