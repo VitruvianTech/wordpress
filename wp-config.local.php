@@ -17,22 +17,24 @@
  *
  * @package WordPress
  */
+define('WP_HOME','http://localhost:8000');
+define('WP_SITEURL','http://localhost:8000');
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'database_name_here');
+define('DB_NAME', 'scorpio');
 
 /** MySQL database username */
-define('DB_USER', 'username_here');
+define('DB_USER', 'vitruviantech');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'password_here');
+define('DB_PASSWORD', 'catalyst');
 
 /** MySQL hostname */
-define('DB_HOST', 'localhost');
+define('DB_HOST', '172.28.128.3');
 
 /** Database Charset to use in creating database tables. */
-define('DB_CHARSET', 'utf8');
+define('DB_CHARSET', 'utf8mb4');
 
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
@@ -46,14 +48,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'put your unique phrase here');
-define('SECURE_AUTH_KEY',  'put your unique phrase here');
-define('LOGGED_IN_KEY',    'put your unique phrase here');
-define('NONCE_KEY',        'put your unique phrase here');
-define('AUTH_SALT',        'put your unique phrase here');
-define('SECURE_AUTH_SALT', 'put your unique phrase here');
-define('LOGGED_IN_SALT',   'put your unique phrase here');
-define('NONCE_SALT',       'put your unique phrase here');
+define('AUTH_KEY',         'dGsHMR(0MdGXan0>vVg=/=rv+Rm#-Gb7Se=/eEQl<A9 inOZn#gKs]QSQU>w73vM');
+define('SECURE_AUTH_KEY',  'k,.0HMqy( x]m|6?iCwoCawcc~p/8z!X8/gV6d&33(SJgI*e6]4k{lnNm8WMaTF@');
+define('LOGGED_IN_KEY',    'u&.*aZk53uc&{P$opx.>foGWWd5<,8EL8:4J0Nb7ackdOTsa7]#<uO%#h.@zEy#j');
+define('NONCE_KEY',        'xMXo6$3OqH/6}N>|6x@xf+eR1DlUzvO%MQ 4xw h9:-&ZzX->n56*!5zYI-;JQ^p');
+define('AUTH_SALT',        '>4%KrAmPfbxaPNp|[cSl-3;dCENpRlsYwfMz()GKd-~Dp<1kD#xvr%)WQ&ML}D#-');
+define('SECURE_AUTH_SALT', ')&IC*Jld-TKuaDm9B1ZAB>dZ}}P?Sn&sM$3/;umDO|T|^!-oh(+Ey]L0CwK-F==0');
+define('LOGGED_IN_SALT',   'Q9;2@:GLk8sU3ofB]w#ILc(4Oj@UnA|.>zV0Uo3s &/?J#Mhd5 ~OHb6#1mV@g9V');
+define('NONCE_SALT',       'q=+=D~e hARNvnZx_;|t}d.O[pCXh:VBt^go@QLd{AqbF?7S9k)M`u>mxq}mb-,q');
 
 /**#@-*/
 
@@ -77,7 +79,7 @@ $table_prefix  = 'wp_';
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
 
 /* That's all, stop editing! Happy blogging. */
 

@@ -17,8 +17,8 @@
  *
  * @package WordPress
  */
-define('WP_HOME','http://admin.vitruvian.tech');
-define('WP_SITEURL','http://admin.vitruvian.tech');
+define('WP_HOME','http://staging.vitruvian.tech:8000');
+define('WP_SITEURL','http://staging.vitruvian.tech:8000');
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
