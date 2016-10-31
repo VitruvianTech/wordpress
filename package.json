@@ -3,7 +3,7 @@
   "description": "The VitruvianTech™ Scorpio CMS",
   "author": "Peter C. Romano <pete@vitruvian.tech> (http://github.com/vitruvian-tech)",
   "license": "MIT",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/vitruvian-tech/Scorpio-CMS"

@@ -9,9 +9,9 @@
  * @version    1.0
  * @author     Studio 24 Ltd  <info@studio24.net>
  */
-define('WP_HOME','http://staging.vitruvian.tech:8000');
+define('WP_HOME','http://admin.vitruvian.tech');
 
-define('WP_SITEURL','http://staging.vitruvian.tech:8000');
+define('WP_SITEURL','http://admin.vitruvian.tech');
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
@@ -33,4 +33,4 @@ define('DB_HOST', 'localhost');
  * It is strongly recommended that plugin and theme developers use WP_DEBUG
  * in their development environments.
  */
-define('WP_DEBUG', true);
+define('WP_DEBUG', false);
