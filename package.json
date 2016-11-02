@@ -1,9 +1,9 @@
 {
-  "name": "@vitruvian-tech/scorpio-cms",
-  "description": "The VitruvianTech™ Scorpio CMS",
+  "name": "@vitruvian-tech/wordpress",
+  "description": "The VitruvianTech™ WordPress Server",
   "author": "Peter C. Romano <pete@vitruvian.tech> (http://github.com/vitruvian-tech)",
   "license": "MIT",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/vitruvian-tech/Scorpio-CMS"
@@ -16,7 +16,7 @@
   ],
   "main": "bin/server.js",
   "bin": {
-    "scorpio-cms": "./bin/server.js"
+    "wordpress": "./bin/server.js"
   },
   "scripts": {
     "start": "PORT=${PORT:=8000} concurrent --kill-others \"npm run start-prod\"",
