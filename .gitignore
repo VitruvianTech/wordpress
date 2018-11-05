@@ -1,4 +1,4 @@
-data
-.env*
-!.env.sample
+nginx
 .DS_Store
+.idea
+.vscode
