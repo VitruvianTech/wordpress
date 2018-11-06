@@ -22,7 +22,7 @@ services:
      image: wordpress
      restart: unless-stopped
      volumes:
-       - ../${DOMAIN}:/var/www/html
+       - ../${PROJECT_NAME}:/var/www/html
        - ./conf.d/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
      environment:
        WORDPRESS_DB_HOST: mysql:${MYSQL_PORT}
@@ -30,8 +30,8 @@ services:
        WORDPRESS_DB_USER: ${MYSQL_USER}
        WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
        WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX}
-       VIRTUAL_HOST: ${DOMAIN}
-       LETSENCRYPT_HOST: ${DOMAIN}
+       VIRTUAL_HOST: ${DOMAINS}
+       LETSENCRYPT_HOST: ${DOMAINS}
        LETSENCRYPT_EMAIL: ${EMAIL}
        WP_ENV: ${WP_ENV}
      logging:
@@ -109,4 +109,4 @@ services:
 
 volumes:
   mysql:
-    name: ${DOMAIN}
+    name: ${PROJECT_NAME}
