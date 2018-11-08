@@ -6,7 +6,7 @@ services:
      container_name: ${DOMAIN}-mysql
      restart: unless-stopped
      volumes:
-        - mysql:/var/lib/mysql
+        - ./${DOMAIN}-mysql:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
        MYSQL_DATABASE: ${MYSQL_DATABASE}
