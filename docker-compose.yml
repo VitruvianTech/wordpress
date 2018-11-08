@@ -22,7 +22,7 @@ services:
      image: wordpress
      restart: unless-stopped
      volumes:
-       - ../${DOMAIN}:/var/www/html
+       - ${WP_PATH}/${DOMAIN}:/var/www/html
        - ./conf.d/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
      environment:
        WORDPRESS_DB_HOST: ${DOMAIN}-mysql:${MYSQL_PORT}
@@ -43,7 +43,7 @@ services:
 #   wpcli:
 #     image: tatemz/wp-cli
 #     volumes:
-#       - ../${DOMAIN}:/var/www/html
+#       - ${WP_PATH}/${DOMAIN}:/var/www/html
 #     depends_on:
 #       - mysql
 #     entrypoint: wp
