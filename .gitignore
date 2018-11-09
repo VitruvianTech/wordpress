@@ -1,5 +1,4 @@
-*-nginx
-*-mysql
+mnt
 .DS_Store
 .idea
 .vscode
