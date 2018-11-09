@@ -1,20 +1,6 @@
 version: '3.5'
 
 services:
-  mysql:
-    image: mariadb
-    container_name: ${DOMAIN}-mysql
-    restart: unless-stopped
-    volumes:
-      - mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "${MYSQL_PORT}:3306"
-
   wordpress:
     depends_on:
       - mysql
@@ -22,8 +8,8 @@ services:
     image: wordpress
     restart: unless-stopped
     volumes:
-      - ${MOUNT_PATH}/${DOMAIN}/wordpress:/var/www/html
-      - ./etc/php/conf.d/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
+      - ${VOLUME_PATH}/${DOMAIN}/wordpress:/var/www/html
+      - ./config/wordpress/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
     environment:
       WORDPRESS_DB_HOST: ${DOMAIN}-mysql:${MYSQL_PORT}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
@@ -45,7 +31,7 @@ services:
   #   container_name: ${DOMAIN}-wp-cli
   #   restart: unless-stopped
   #   volumes:
-  #     - ${MOUNT_PATH}/${DOMAIN}/wordpress:/var/www/html
+  #     - ${VOLUME_PATH}/${DOMAIN}/wordpress:/var/www/html
   #   depends_on:
   #     - mysql
   #     - wordpress
@@ -58,6 +44,20 @@ services:
   #   ports:
   #     - "${IP:-0.0.0.0}:${WP_CLI_PORT}:80"
 
+  mysql:
+    image: mariadb
+    container_name: ${DOMAIN}-mysql
+    restart: unless-stopped
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+
   nginx:
     image: nginx
     labels:
@@ -68,11 +68,11 @@ services:
       - "${IP:-0.0.0.0}:80:80"
       - "${IP:-0.0.0.0}:443:443"
     volumes:
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:ro
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:ro
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/htpasswd:/etc/nginx/htpasswd:ro
     logging:
       driver: ${NGINX_LOG_DRIVER:-json-file}
       options:
@@ -85,13 +85,13 @@ services:
     container_name: ${DOMAIN}-docker-gen
     restart: always
     volumes:
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:ro
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:ro
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/htpasswd:/etc/nginx/htpasswd:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./etc/docker-gen/templates/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - ./config/docker-gen/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
     logging:
       driver: ${DOCKER_GEN_LOG_DRIVER:-json-file}
       options:
@@ -103,10 +103,10 @@ services:
     container_name: ${DOMAIN}-letsencrypt
     restart: always
     volumes:
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
-      - ${MOUNT_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:rw
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
       NGINX_DOCKER_GEN_CONTAINER: ${DOMAIN}-docker-gen
