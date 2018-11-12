@@ -1,6 +1,7 @@
 version: '3.5'
 
 services:
+  # Production configuration
   wordpress:
     depends_on:
       - mysql
@@ -11,7 +12,7 @@ services:
       - ${VOLUME_PATH}/${DOMAIN}/wordpress:/var/www/html
       - ./config/wordpress/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
     environment:
-      WORDPRESS_DB_HOST: ${DOMAIN}-mysql:${MYSQL_PORT}
+      WORDPRESS_DB_HOST: ${DOMAIN}-mysql:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
       WORDPRESS_DB_USER: ${MYSQL_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
@@ -24,7 +25,7 @@ services:
       options:
         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
     ports:
-      - "${IP:-0.0.0.0}:${PORT}:80"
+      - "${IP:-0.0.0.0}:${WP_PORT}:80"
 
   mysql:
     image: mariadb
@@ -40,6 +41,47 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
 
+  # Staging configuration
+  wordpress-staging:
+    depends_on:
+      - mysql-staging
+    container_name: staging.${DOMAIN}-wordpress
+    image: wordpress
+    restart: unless-stopped
+    volumes:
+      - ${VOLUME_PATH}/staging.${DOMAIN}/wordpress:/var/www/html
+      - ./config/wordpress/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
+    environment:
+      WORDPRESS_DB_HOST: ${DOMAIN}-mysql-staging:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX}
+      VIRTUAL_HOST: staging.${DOMAIN}
+      LETSENCRYPT_HOST: staging.${DOMAIN}
+      LETSENCRYPT_EMAIL: ${EMAIL}
+      WP_ENV: ${WP_STAGING_ENV}
+    logging:
+      options:
+        max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
+    ports:
+      - "${IP:-0.0.0.0}:${WP_STAGING_PORT}:80"
+
+  mysql-staging:
+    image: mariadb
+    container_name: ${DOMAIN}-mysql-staging
+    restart: unless-stopped
+    volumes:
+      - mysql-staging:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_STAGING_PORT}:3306"
+
+  # Web proxy configuration
   nginx:
     image: nginx
     labels:
@@ -102,3 +144,5 @@ services:
 volumes:
   mysql:
     name: ${DOMAIN}
+  mysql-staging:
+    name: staging.${DOMAIN}
