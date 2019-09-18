@@ -30,7 +30,7 @@ services:
   mysql:
     image: mariadb
     container_name: ${DOMAIN}-mysql
-    restart: unless-stopped
+    restart: always
     volumes:
       - mysql:/var/lib/mysql
     environment:
@@ -70,7 +70,7 @@ services:
   mysql-staging:
     image: mariadb
     container_name: staging.${DOMAIN}-mysql
-    restart: unless-stopped
+    restart: always
     volumes:
       - mysql-staging:/var/lib/mysql
     environment:
