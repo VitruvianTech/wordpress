@@ -123,7 +123,7 @@ services:
         max-file: ${DOCKER_GEN_LOG_MAX_FILE:-10}
 
   letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion:v1.9.1
+    image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: ${DOMAIN}-letsencrypt
     restart: always
     volumes:
