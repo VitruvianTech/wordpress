@@ -1,0 +1,61 @@
+version: '3.5'
+
+services:
+  nginx:
+    image: nginx
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    container_name: ${DOMAIN}-nginx
+    restart: always
+    ports:
+      - "${IP:-0.0.0.0}:80:80"
+      - "${IP:-0.0.0.0}:443:443"
+    volumes:
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:ro
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/htpasswd:/etc/nginx/htpasswd:ro
+    logging:
+      driver: ${NGINX_LOG_DRIVER:-json-file}
+      options:
+        max-size: ${NGINX_LOG_MAX_SIZE:-4m}
+        max-file: ${NGINX_LOG_MAX_FILE:-10}
+
+  docker-gen:
+    image: jwilder/docker-gen:0.7.3
+    command: -notify-sighup ${DOMAIN}-nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    container_name: ${DOMAIN}-docker-gen
+    restart: always
+    volumes:
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:ro
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./config/docker-gen/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+    logging:
+      driver: ${DOCKER_GEN_LOG_DRIVER:-json-file}
+      options:
+        max-size: ${DOCKER_GEN_LOG_MAX_SIZE:-2m}
+        max-file: ${DOCKER_GEN_LOG_MAX_FILE:-10}
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: ${DOMAIN}-letsencrypt
+    restart: always
+    volumes:
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/vhost.d:/etc/nginx/vhost.d
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/html:/usr/share/nginx/html
+      - ${VOLUME_PATH}/${DOMAIN}/nginx/certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      NGINX_DOCKER_GEN_CONTAINER: ${DOMAIN}-docker-gen
+      NGINX_PROXY_CONTAINER: ${DOMAIN}-nginx
+    logging:
+      driver: ${LETSENCRYPT_LOG_DRIVER:-json-file}
+      options:
+        max-size: ${LETSENCRYPT_LOG_MAX_SIZE:-2m}
+        max-file: ${LETSENCRYPT_LOG_MAX_FILE:-10}

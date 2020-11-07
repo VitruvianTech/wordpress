@@ -1,0 +1,81 @@
+#
+# Network Settings
+#
+
+# Domain name
+DOMAIN=example.com
+
+# Alternate hostnames
+HOSTNAMES=www.example.com
+
+# Service email (for Let's Encrypt register, etc.)
+EMAIL=email@example.com
+
+# IP address of the external access Interface
+IP=0.0.0.0
+
+
+#
+# Database Settings
+# We recommend MySQL or MariaDB - please update docker-compose file if needed.
+#
+
+# Ports
+MYSQL_PORT=3306
+MYSQL_STAGING_PORT=3307
+
+# Root password for your database
+MYSQL_ROOT_PASSWORD=root
+
+# Database name, user and password for your WordPress site
+MYSQL_DATABASE=wordpress
+MYSQL_USER=wordpress
+MYSQL_PASSWORD=wordpress
+
+
+#
+# Application Settings
+#
+
+# Ports
+WP_PORT=8080
+WP_STAGING_PORT=8081
+
+# Database table prefix
+WP_TABLE_PREFIX=wp_
+
+
+#
+# File System Settings
+#
+
+# Volume path
+VOLUME_PATH=./domains
+
+# Max Log File Size
+LOGGING_OPTIONS_MAX_SIZE=200k
+
+
+#
+# Docker Settings
+#
+# This section offers two options max-size and max-file, which follow the docker documentation
+# as follow:
+#
+# logging:
+#      driver: "json-file"s
+#      options:
+#        max-size: "200k"
+#        max-file: "10"
+#
+#NGINX_LOG_DRIVER=json-file
+#NGINX_LOG_MAX_SIZE=4m
+#NGINX_LOG_MAX_FILE=10
+
+#DOCKER_GEN_LOG_DRIVER=json-file
+#DOCKER_GEN_LOG_MAX_SIZE=2m
+#DOCKER_GEN_LOG_MAX_FILE=10
+
+#LETSENCRYPT_LOG_DRIVER=json-file
+#LETSENCRYPT_LOG_MAX_SIZE=2m
+#LETSENCRYPT_LOG_MAX_FILE=10

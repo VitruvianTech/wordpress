@@ -1,47 +1,41 @@
 version: '3.5'
 
 services:
-  wordpress:
+  wordpress-staging:
     depends_on:
-      - mysql
-    container_name: ${DOMAIN}-wordpress
+      - mysql-staging
+    container_name: staging.${DOMAIN}-wordpress
     image: wordpress
     restart: unless-stopped
     volumes:
-      - ${VOLUME_PATH}/${DOMAIN}/wordpress:/var/www/html
+      - ${VOLUME_PATH}/staging.${DOMAIN}/wordpress:/var/www/html
       - ./config/wordpress/uploadsize.ini:/usr/local/etc/php/conf.d/uploadsize.ini
     environment:
-      WORDPRESS_DB_HOST: ${DOMAIN}-mysql:3306
+      WORDPRESS_DB_HOST: staging.${DOMAIN}-mysql:3306
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
       WORDPRESS_DB_USER: ${MYSQL_USER}
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
       WORDPRESS_TABLE_PREFIX: ${WP_TABLE_PREFIX}
-      VIRTUAL_HOST: ${DOMAIN},${HOSTNAMES}
-      LETSENCRYPT_HOST: ${DOMAIN},${HOSTNAMES}
+      VIRTUAL_HOST: staging.${DOMAIN}
+      LETSENCRYPT_HOST: staging.${DOMAIN}
       LETSENCRYPT_EMAIL: ${EMAIL}
-      WP_ENV: ${WP_ENV}
+      WP_ENV: ${WP_STAGING_ENV}
     logging:
       options:
         max-size: ${LOGGING_OPTIONS_MAX_SIZE:-200k}
     ports:
-      - "${IP:-0.0.0.0}:${WP_PORT}:80"
+      - "${IP:-0.0.0.0}:${WP_STAGING_PORT}:80"
 
-  mysql:
+  mysql-staging:
     image: mariadb
-    container_name: ${DOMAIN}-mysql
+    container_name: staging.${DOMAIN}-mysql
     restart: always
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql-staging:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "${MYSQL_PORT}:3306"
-
-volumes:
-  mysql:
-    name: ${DOMAIN}
-  mysql-staging:
-    name: staging.${DOMAIN}
+      - "${MYSQL_STAGING_PORT}:3306"
